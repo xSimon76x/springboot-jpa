@@ -1,6 +1,7 @@
 package com.simon.curso.springboot.jpa.springboot_jpa.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -8,6 +9,15 @@ import org.springframework.data.repository.CrudRepository;
 import com.simon.curso.springboot.jpa.springboot_jpa.entities.Person;
 
 public interface PersonRepository extends CrudRepository<Person, Long> {
+
+    @Query("select p from Person p where p.id=?1")
+    Optional<Person> findOne(Long id);
+
+    @Query("select p from Person p where p.name like %?1%")
+    Optional<Person> findOneLikeName(String name);
+    
+    // Lo mismo que la funcion custom de arriba, pero viene del crud repository de JPA
+    Optional<Person> findByNameContaining(String name);
 
     List<Person> findByProgrammingLanguage(String programmingLanguage);
     

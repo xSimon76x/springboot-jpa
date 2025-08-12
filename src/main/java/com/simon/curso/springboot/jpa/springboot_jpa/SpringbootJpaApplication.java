@@ -23,7 +23,7 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		findOne();
+		create();
 	}	
 
 	public void findOne() {
@@ -45,7 +45,8 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		// para abreviar la forma pasada, es como que se intuye que el "person" 
 		// del callback, se usara en el println asi que se le envia y este se imprime ahi
 		repository.findById(2L).ifPresent(System.out::println);
-
+		
+		repository.findByNameContaining("pe").ifPresent(System.out::println);
 	}
 	
 	public void list() {
@@ -60,6 +61,14 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 			System.out.println(person[0] + " es experto en " + person[1]);
 			// System.out.println(person);
 		});
+	}
+
+	public void create() {
+		Person person = new Person(null, "Lalo", "Thor", "Python");
+
+		Person personNew = repository.save(person);
+
+		System.out.println(personNew);
 	}
 
 }
