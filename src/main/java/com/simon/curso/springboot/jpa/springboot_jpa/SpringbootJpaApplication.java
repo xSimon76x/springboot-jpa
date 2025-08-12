@@ -25,7 +25,7 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		update();
+		delete();
 	}	
 
 	// Cuando la operacion a la BD es solo un select (o que no modifiquen en la BD)
@@ -115,6 +115,19 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 			System.out.println("El usuario no existe");
 		}
 		scanner.close();
+	}
+
+	@Transactional
+	public void delete() {
+		repository.findAll().forEach(System.out::println);
+
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Ingrese el id del usuario a eliminar");
+		Long id = scanner.nextLong();
+		repository.deleteById(id);//Tambien existe el detele() pero se pasa el objeto entity
+		scanner.close();
+
+		repository.findAll().forEach(System.out::println);
 	}
 
 }
