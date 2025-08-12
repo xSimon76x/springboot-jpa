@@ -2,11 +2,13 @@ package com.simon.curso.springboot.jpa.springboot_jpa;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.simon.curso.springboot.jpa.springboot_jpa.entities.Person;
 import com.simon.curso.springboot.jpa.springboot_jpa.repositories.PersonRepository;
@@ -26,6 +28,10 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		create();
 	}	
 
+	// Cuando la operacion a la BD es solo un select (o que no modifiquen en la BD)
+	// tambien se usa el transaccional, pero se especifica que el transaccional 
+	// sera solo de lectura
+	@Transactional(readOnly = true)
 	public void findOne() {
 		// forma1
 		// Person person = repository.findById(1L).orElseThrow();
@@ -63,12 +69,26 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		});
 	}
 
+	// Cuando se realiza una operacion de delete, update, create a la BD
+	// Se debe usar el Transaccional
+	@Transactional
 	public void create() {
-		Person person = new Person(null, "Lalo", "Thor", "Python");
+
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Ingrese el nombre:");
+		String name = scanner.nextLine();
+		System.out.println("Ingrese el apellido:");
+		String lastname = scanner.nextLine();
+		System.out.println("Ingrese el lenguaje de programacion:");
+		String programmingLanguage = scanner.nextLine();
+		scanner.close();
+
+		Person person = new Person(null, name, lastname, programmingLanguage);
 
 		Person personNew = repository.save(person);
 
 		System.out.println(personNew);
+		repository.findById(personNew.getId()).ifPresent(System.out::println);
 	}
 
 }
