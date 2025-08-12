@@ -25,7 +25,7 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		create();
+		update();
 	}	
 
 	// Cuando la operacion a la BD es solo un select (o que no modifiquen en la BD)
@@ -89,6 +89,32 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
 		System.out.println(personNew);
 		repository.findById(personNew.getId()).ifPresent(System.out::println);
+	}
+
+	@Transactional
+	public void update() {
+		System.out.println();
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Ingrese el id de la persona:");
+		Long id = scanner.nextLong();
+		
+		
+		Optional<Person> optionalPerson = repository.findById(id);
+		
+		if(optionalPerson.isPresent()){
+			Person p = optionalPerson.orElseThrow();
+			System.out.println(p);
+			Scanner scanner2 = new Scanner(System.in);
+			System.out.println("Ingrese el lenguaje de programacion:");
+			String programmingLanguage = scanner2.nextLine();
+			p.setProgrammingLanguage(programmingLanguage);
+			Person personDB = repository.save(p);
+			System.out.println(personDB);
+			scanner2.close();
+		} else {
+			System.out.println("El usuario no existe");
+		}
+		scanner.close();
 	}
 
 }
