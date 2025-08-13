@@ -162,6 +162,14 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
 		String fullname = repository.getFullNameById(id);
 		System.out.println("El nombre completo del usuario es: " + fullname);
+
+		List<Object []> person = repository.findAllMixPerson();
+		person.forEach(p -> {
+			System.out.println("ProgrammingLanguage="+p[1]+ " person=" +p[0]);
+		});
+
+		List<Person> personMix = repository.findAllPersonalizedObjectPerson();
+		personMix.forEach(System.out::println);
 	}
 
 }
