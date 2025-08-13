@@ -25,7 +25,7 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		delete2();
+		personalizedQueries();
 	}	
 
 	// Cuando la operacion a la BD es solo un select (o que no modifiquen en la BD)
@@ -148,6 +148,20 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		scanner.close();
 
 		repository.findAll().forEach(System.out::println);
+	}
+
+	@Transactional(readOnly = true)
+	public void personalizedQueries(){
+		System.out.println("=========================Consulta solo por el nombre=========================");
+		System.out.println("Ingrese el id del usuario");
+		Scanner scanner = new Scanner(System.in);
+		Long id = scanner.nextLong();
+		scanner.close();
+		String name = repository.getNameById(id);
+		System.out.println("El nombre del usuario es: " + name);
+
+		String fullname = repository.getFullNameById(id);
+		System.out.println("El nombre completo del usuario es: " + fullname);
 	}
 
 }
