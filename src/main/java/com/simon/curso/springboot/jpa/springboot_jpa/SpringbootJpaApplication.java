@@ -26,7 +26,18 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		personalizedQuery();
+		queriesFunctionAggregation();
+	}
+
+	@Transactional(readOnly = true)
+	public void queriesFunctionAggregation(){
+		Long count = repository.totalPerson();
+		Long min = repository.minId();
+		Long max = repository.maxId();
+
+		System.out.println("==============> Cantidad de usuarios totales: " + count);
+		System.out.println("==============> Usuario con id minimo: " + min);
+		System.out.println("==============> Usuario con id maximo: " + max);
 	}
 	
 	@Transactional(readOnly = true)
