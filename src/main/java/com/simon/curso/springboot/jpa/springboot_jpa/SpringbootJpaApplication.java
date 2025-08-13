@@ -10,6 +10,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.simon.curso.springboot.jpa.springboot_jpa.dto.PersonDto;
 import com.simon.curso.springboot.jpa.springboot_jpa.entities.Person;
 import com.simon.curso.springboot.jpa.springboot_jpa.repositories.PersonRepository;
 
@@ -170,6 +171,10 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
 		List<Person> personMix = repository.findAllPersonalizedObjectPerson();
 		personMix.forEach(System.out::println);
+
+		System.out.println("Consulta del findAllPersonDto");
+		List<PersonDto> personDto = repository.findAllPersonDto();
+		personDto.forEach(System.out::println);
 	}
 
 }
