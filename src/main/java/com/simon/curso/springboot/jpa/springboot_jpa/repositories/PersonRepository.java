@@ -11,6 +11,11 @@ import com.simon.curso.springboot.jpa.springboot_jpa.entities.Person;
 
 public interface PersonRepository extends CrudRepository<Person, Long> {
 
+    // Para nombres que comiencen J, K, L....P
+    // @Query("select p from Person p where p.name between 'J' and 'P' ")
+    @Query("select p from Person p where p.id between 2 and 5")
+    List<Person> findAllBetweenId();
+
     @Query("select p.name from Person p where p.id=?1")
     String getNameById(Long id);
 

@@ -26,8 +26,17 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		personalizedQueries();
-	}	
+		personalizedQuery();
+	}
+	
+	@Transactional(readOnly = true)
+	public void personalizedQuery(){
+
+		System.out.println("Consulta del findAllBetweenId");
+		List<Person> persons = repository.findAllBetweenId();
+		persons.forEach(System.out::println);
+
+	}
 
 	// Cuando la operacion a la BD es solo un select (o que no modifiquen en la BD)
 	// tambien se usa el transaccional, pero se especifica que el transaccional 
