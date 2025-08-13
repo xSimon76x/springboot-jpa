@@ -14,6 +14,7 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
     @Query("select p.name from Person p where p.id=?1")
     String getNameById(Long id);
 
+    // @Query("select p.name || ' ' || p.lastname as fullname from Person p where p.id=?1")
     @Query("select concat(p.name, ' ', p.lastname) as fullname from Person p where p.id=?1")
     String getFullNameById(Long id);
 
@@ -65,7 +66,13 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
 
     @Query("select distinct(p.programmingLanguage) from Person p")
     List<String> findAllDistinctProgramingLanguage();
-
+    
     @Query("select count(distinct(p.programmingLanguage)) from Person p")
     Long findAllDistinctProgramingLanguageCount();
+
+    @Query("select lower(p.name) from Person p")
+    List<String> findAllNameLower();
+
+    @Query("select upper(p.name || ' ' || p.lastname) from Person p")
+    List<String> findAllFullNameUpper();
 }

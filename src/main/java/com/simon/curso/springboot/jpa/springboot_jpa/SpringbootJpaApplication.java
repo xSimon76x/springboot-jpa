@@ -179,10 +179,18 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		System.out.println("Consulta del findAllDistinctProgramingLanguage");
 		List<String> programmingLanguages = repository.findAllDistinctProgramingLanguage();
 		programmingLanguages.forEach(System.out::println);
-
+		
 		System.out.println("Consulta del findAllDistinctProgramingLanguageCount");
 		Long programmingLanguagesCount = repository.findAllDistinctProgramingLanguageCount();
 		System.out.println("Total de lenguajes de programacion: " + programmingLanguagesCount);
+		
+		System.out.println("Consulta del findAllNameLower");
+		List<String> namesLower = repository.findAllNameLower();
+		namesLower.forEach(System.out::println);
+
+		System.out.println("Consulta del findAllFullNameUpper");
+		List<String> fullnamesUpper = repository.findAllFullNameUpper();
+		fullnamesUpper.forEach(System.out::println);
 	}
 
 }
