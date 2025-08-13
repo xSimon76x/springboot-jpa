@@ -36,6 +36,14 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		List<Person> persons = repository.findAllBetweenId();
 		persons.forEach(System.out::println);
 
+		System.out.println("Consulta del obtenerPersonData");
+		List<Person> personsOrder = repository.findAllBetweenIdOrder(1L, 5L);
+		personsOrder.forEach(System.out::println);
+
+		System.out.println("Consulta del findByNameBetweenOrderByNameDescLastnameAsc");
+		List<Person> personsjap = repository.findByNameBetweenOrderByNameDescLastnameAsc("J", "Q");
+		personsjap.forEach(System.out::println);
+
 	}
 
 	// Cuando la operacion a la BD es solo un select (o que no modifiquen en la BD)

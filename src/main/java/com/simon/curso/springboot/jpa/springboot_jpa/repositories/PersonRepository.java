@@ -11,6 +11,10 @@ import com.simon.curso.springboot.jpa.springboot_jpa.entities.Person;
 
 public interface PersonRepository extends CrudRepository<Person, Long> {
 
+    List<Person> findByNameBetweenOrderByNameDescLastnameAsc(String name1, String name2);
+
+    @Query("select p from Person p where p.id between ?1 and ?2 order by p.name asc, p.lastname desc")
+    List<Person> findAllBetweenIdOrder(Long c1, Long c2);
     // Para nombres que comiencen J, K, L....P
     // @Query("select p from Person p where p.name between 'J' and 'P' ")
     @Query("select p from Person p where p.id between 2 and 5")
