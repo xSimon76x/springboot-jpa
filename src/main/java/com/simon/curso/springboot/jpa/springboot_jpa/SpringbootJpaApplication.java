@@ -36,6 +36,7 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		Long max = repository.getMaxId();
 		List<Object []> personLength = repository.getPersonNameLength();
 		Integer minLengthName = repository.getMinLengthName();
+		Object[] resumReg = (Object[]) repository.getResumeAggregationFunction();
 
 		System.out.println("==============> Cantidad de usuarios totales: " + count);
 		System.out.println("==============> Usuario con id minimo: " + min);
@@ -47,6 +48,9 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 			System.out.println("name="+name+", length="+length);
 		});
 		System.out.println("============> Nombre mas corto: " + minLengthName);
+
+		System.out.println("===========> Consulta resumen de funciones de agregacion: min, max, sum, avg, count");
+		System.out.println("min="+ resumReg[0]+", max="+resumReg[1]+", sum="+resumReg[2]+", avg="+resumReg[3]+", count="+resumReg[4]);
 	}
 	
 	@Transactional(readOnly = true)
