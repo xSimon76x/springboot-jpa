@@ -1,5 +1,6 @@
 package com.simon.curso.springboot.jpa.springboot_jpa;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -26,7 +27,18 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		subQueries();
+		whereIn();
+	}
+
+	@Transactional(readOnly = true)
+	public void whereIn(){
+		List<Person> personsByIds = repository.getPersonsByIds(Arrays.asList(1L, 2L, 5L, 7L));
+		System.out.println("=====================> Consulta los id de usuarios: 1, 2, 5, 7 <==============");
+		personsByIds.stream().forEach(System.out::println);
+
+		List<Person> personsDistinctIds = repository.getPersonsDistinctIds(Arrays.asList(1L, 2L, 5L, 7L));
+		System.out.println("=====================> Consulta los distintos ids de usuarios diferentes a: 1, 2, 5, 7 <==============");
+		personsDistinctIds.stream().forEach(System.out::println);
 	}
 
 	@Transactional(readOnly = true)
