@@ -11,14 +11,20 @@ import com.simon.curso.springboot.jpa.springboot_jpa.entities.Person;
 
 public interface PersonRepository extends CrudRepository<Person, Long> {
 
+    @Query("select min(length(p.name)) from Person p")
+    Integer getMinLengthName();
+    
+    @Query("select p.name, length(p.name) from Person p")
+    List<Object []> getPersonNameLength();
+
     @Query("select count(p) from Person p")
-    Long totalPerson();
+    Long getTotalPerson();
 
     @Query("select min(p.id) from Person p")
-    Long minId();
+    Long getMinId();
 
     @Query("select max(p.id) from Person p")
-    Long maxId();
+    Long getMaxId();
 
     List<Person> findByNameBetweenOrderByNameDescLastnameAsc(String name1, String name2);
 
