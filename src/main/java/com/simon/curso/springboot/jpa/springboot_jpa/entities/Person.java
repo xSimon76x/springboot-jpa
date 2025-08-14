@@ -1,10 +1,16 @@
 package com.simon.curso.springboot.jpa.springboot_jpa.entities;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PostPersist;
+import jakarta.persistence.PostUpdate;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,6 +28,12 @@ public class Person {
     @Column(name = "programming_language")
     private String programmingLanguage;
 
+    @Column(name = "create_at")
+    private LocalDateTime createAt;
+
+    @Column(name = "update_at")
+    private LocalDateTime updateAt;
+
     public Person() {}
     
     public Person(String name, String lastname) {
@@ -35,6 +47,29 @@ public class Person {
         this.lastname = lastname;
         this.programmingLanguage = programmingLanguage;
     }
+
+    @PrePersist
+    public void prePersist() {
+        System.out.println("Evento del ciclo de vida del entity pre-persist");
+        this.createAt = LocalDateTime.now();
+    }
+    
+    @PostPersist
+    public void postPersist() {
+        System.out.println("Evento del ciclo de vida del entity post-persist");
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        System.out.println("Evento del ciclo de vida del entity pre-update");
+        this.updateAt = LocalDateTime.now();
+    }
+
+    @PostUpdate
+    public void postUpdate() {
+        System.out.println("Evento del ciclo de vida del entity post-update");
+    }
+
     public Long getId() {
         return id;
     }
@@ -70,6 +105,7 @@ public class Person {
     @Override
     public String toString() {
         return "Person [id=" + id + ", name=" + name + ", lastname=" + lastname + ", programmingLanguage="
-                + programmingLanguage + ", toString()=" + super.toString() + "]";
+                + programmingLanguage + ", createAt=" + createAt + ", updateAt=" + updateAt + "]";
     }
+
 }
